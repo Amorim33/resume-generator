@@ -1,6 +1,7 @@
 import { YogaInitialContext } from 'graphql-yoga';
-import { User } from '../__generated__/resolvers-types';
+import { User, UserLoaders } from '@resume-generator/domain';
 
 export type GraphQLContext = YogaInitialContext & {
-  user: User | null;
+  user?: User | null;
+  loaders?: UserLoaders;
 };
