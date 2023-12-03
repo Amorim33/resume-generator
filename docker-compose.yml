@@ -1,0 +1,18 @@
+services:
+  postgres:
+    image: postgres:16-alpine
+    ports:
+      - 5432:5432
+    environment:
+      POSTGRES_USER: resume-generator
+      POSTGRES_PASSWORD: resume-generator
+      POSTGRES_DB: resume-generator
+
+  postgres-test:
+    image: postgres:16-alpine
+    ports:
+      - 54321:5432
+    environment:
+      POSTGRES_USER: resume-generator
+      POSTGRES_PASSWORD: resume-generator
+      POSTGRES_DB: resume-generator

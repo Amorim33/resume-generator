@@ -1,0 +1,27 @@
+{
+  "name": "@resume-generator/domain",
+  "version": "0.0.1",
+  "type": "module",
+  "main": "src/index.ts",
+  "module": "src/index.ts",
+  "scripts": {
+    "lint": "eslint --max-warnings=0 \"**/*.{ts*,js}\"",
+    "lint:fix": "eslint --max-warnings=0 \"**/*.{ts*,js}\" --fix",
+    "migrate": "pnpm ts src/migrate",
+    "test": "vitest run",
+    "test:watch": "vitest",
+    "ts": "tsx -r dotenv/config",
+    "type-check": "tsc --noEmit"
+  },
+  "dependencies": {
+    "slonik": "^37.2.0",
+    "zod": "^3.22.4"
+  },
+  "devDependencies": {
+    "@resume-generator/eslint-config": "workspace:*",
+    "tsx": "^4.4.0",
+    "typescript": "^5.2.2",
+    "vite": "^5.0.0",
+    "vitest": "0.34.6"
+  }
+}
