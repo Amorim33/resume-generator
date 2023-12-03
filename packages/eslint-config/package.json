@@ -1,0 +1,24 @@
+{
+  "name": "@resume-generator/eslint-config",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "main": "index.cjs",
+  "scripts": {
+    "lint": "eslint --report-unused-disable-directives --max-warnings=0 \"**/*.{ts*,js,cjs}\"",
+    "lint:fix": "eslint --report-unused-disable-directives --max-warnings=0 \"**/*.{ts*,js,cjs}\" --fix"
+  },
+  "devDependencies": {
+    "@typescript-eslint/eslint-plugin": "^6.10.0",
+    "@typescript-eslint/parser": "^6.10.0",
+    "eslint": "^8.53.0",
+    "eslint-config-prettier": "^9.0.0",
+    "eslint-import-resolver-typescript": "^3.6.1",
+    "eslint-plugin-import": "^2.29.0",
+    "eslint-plugin-jsx-a11y": "^6.8.0",
+    "eslint-plugin-react": "^7.33.2",
+    "eslint-plugin-react-hooks": "^4.6.0",
+    "eslint-plugin-relay": "^1.8.3",
+    "typescript": "^5.2.2"
+  }
+}

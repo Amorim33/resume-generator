@@ -1,0 +1,69 @@
+"""
+The query root of GraphQL schema.
+"""
+type Query {
+  """
+  Fetches an object given its ID
+  """
+  node(
+    """
+    The ID of an object
+    """
+    id: ID
+  ): Node
+
+  """
+  Fetches objects given their IDs
+  """
+  nodes(
+    """
+    The IDs of objects
+    """
+    ids: [ID!]!
+  ): [Node]!
+
+  """
+  User that is currently logged in.
+  """
+  me: User
+}
+
+"""
+An object with an ID
+"""
+interface Node {
+  """
+  The id of the object.
+  """
+  id: ID!
+}
+
+"""
+The user object type
+"""
+type User implements Node {
+  """
+  The id of the user
+  """
+  id: ID!
+
+  """
+  The name of the user
+  """
+  name: String!
+
+  """
+  The email of the user
+  """
+  email: String!
+
+  """
+  The preferred contact of the user
+  """
+  contact: String!
+
+  """
+  The self description of the user
+  """
+  about: String!
+}

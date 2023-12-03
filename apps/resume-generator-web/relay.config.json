@@ -1,0 +1,7 @@
+{
+  "schema": "../../packages/schema/graphql.graphql",
+  "src": "src",
+  "noFutureProofEnums": true,
+  "language": "typescript",
+  "eagerEsModules": true
+}

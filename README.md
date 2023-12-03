@@ -36,8 +36,3 @@ TODO
 - Relay
 - Radix UI
 - Styled Components
-
-### Infra
-
-- Terraform
-- Google Cloud Platform

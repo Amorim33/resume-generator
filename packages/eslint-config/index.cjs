@@ -1,0 +1,41 @@
+module.exports = {
+  extends: [
+    'eslint:recommended',
+    'prettier',
+    'plugin:@typescript-eslint/recommended',
+    'plugin:import/recommended',
+    'plugin:import/typescript',
+    'plugin:react/recommended',
+    'plugin:react/jsx-runtime',
+    'plugin:react-hooks/recommended',
+    'plugin:jsx-a11y/recommended',
+  ],
+  parser: '@typescript-eslint/parser',
+  plugins: ['@typescript-eslint', 'relay'],
+  env: { browser: true, node: true },
+  parserOptions: {
+    ecmaVersion: 'latest',
+    sourceType: 'module',
+    ecmaFeatures: { jsx: true },
+  },
+  ignorePatterns: [
+    '**/node_modules/**',
+    '**/dist/**',
+    '**/__generated__/**',
+    '**/coverage/**',
+    'tsconfig.tsbuildinfo',
+    '!.eslintrc.js',
+    '!.prettierrc.js',
+  ],
+  rules: {
+    'no-console': 'error',
+    'no-debugger': 'error',
+    'sort-imports': ['error', { ignoreDeclarationSort: true }],
+    'object-shorthand': 'error',
+    'no-useless-rename': 'error',
+  },
+  settings: {
+    react: { version: '18.0' },
+    'import/resolver': { typescript: true, node: true },
+  },
+};
