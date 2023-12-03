@@ -1,0 +1,6 @@
+{
+  "name": "@resume-generator/schema",
+  "version": "0.0.1",
+  "main": "src/index.ts",
+  "module": "src/index.ts"
+}

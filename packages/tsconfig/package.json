@@ -1,0 +1,14 @@
+{
+  "name": "@resume-generator/tsconfig",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "lint": "eslint --report-unused-disable-directives --max-warnings=0 \"**/*.{ts*,js,cjs}\"",
+    "lint:fix": "eslint --report-unused-disable-directives --max-warnings=0 \"**/*.{ts*,js,cjs}\" --fix"
+  },
+  "devDependencies": {
+    "@resume-generator/eslint-config": "workspace:*",
+    "typescript": "^5.2.2"
+  }
+}

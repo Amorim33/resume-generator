@@ -1,0 +1,42 @@
+{
+  "name": "@resume-generator/graphql",
+  "version": "0.0.1",
+  "sideEffects": false,
+  "scripts": {
+    "build": "tsx esbuild.config.ts",
+    "build:analyze": "ANALYZE=true pnpm build",
+    "clean": "rm -rf build && rm -rf coverage",
+    "dev": "pnpm run ts-dev src/app.ts",
+    "generate": "graphql-codegen --config codegen.yml",
+    "lint": "eslint --max-warnings=0 \"**/*.{ts*,js}\"",
+    "lint:fix": "eslint --max-warnings=0 \"**/*.{ts*,js}\" --fix",
+    "lint:locales": "sort-object --src ./src/locales",
+    "ts": "tsx -r dotenv/config",
+    "ts-dev": "tsx --no-warnings --watch -r dotenv/config",
+    "type-check": "tsc --noEmit"
+  },
+  "dependencies": {
+    "@graphql-tools/schema": "^10.0.0",
+    "@resume-generator/schema": "workspace:*",
+    "graphql": "16.8.1",
+    "graphql-relay": "0.10.0",
+    "graphql-yoga": "^5.0.0",
+    "pino": "^8.16.2",
+    "pino-pretty": "^10.2.3"
+  },
+  "devDependencies": {
+    "@graphql-codegen/cli": "^5.0.0",
+    "@graphql-codegen/typescript": "^4.0.1",
+    "@graphql-codegen/typescript-resolvers": "^4.0.1",
+    "@graphql-tools/executor-http": "^1.0.3",
+    "@resume-generator/eslint-config": "workspace:*",
+    "@vitejs/plugin-react-swc": "^3.4.0",
+    "@vitest/coverage-v8": "0.34.6",
+    "dotenv": "^16.3.1",
+    "esbuild": "0.19.4",
+    "tsx": "^4.4.0",
+    "typescript": "^5.2.2",
+    "vite": "^5.0.0",
+    "vitest": "0.34.6"
+  }
+}

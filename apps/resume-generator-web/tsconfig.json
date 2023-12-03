@@ -1,0 +1,4 @@
+{
+  "extends": "../../packages/tsconfig/tsconfig.web.json",
+  "exclude": ["node_modules"]
+}
