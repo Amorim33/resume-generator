@@ -1,14 +1,12 @@
-import { sql } from 'slonik';
-import { userSchema } from './dto/user-schema';
-import { pool } from '../../database';
+import { UserLoaders } from './user-loader';
 
-export const userRepository = {
-  findById: async (id: string) => {
-    const query = sql.type(userSchema)`
-        SELECT * FROM users WHERE id = ${id}
-    `;
-    return pool.connect((connection) => {
-      return connection.maybeOne(query);
-    });
-  },
-};
+/**
+ * Factory function to create a user repository.
+ *
+ * @example
+ *   const userRepository = createUserRepository(loaders);
+ *   const user = await userRepository.findById('uuid');
+ */
+export const createUserRepository = (loaders: UserLoaders) => ({
+  findById: (id: string) => loaders.userByIdLoader.load(id),
+});

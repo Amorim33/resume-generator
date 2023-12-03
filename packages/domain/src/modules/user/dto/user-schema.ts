@@ -7,3 +7,5 @@ export const userSchema = z.object({
   contact: z.string(),
   about: z.string(),
 });
+
+export type User = z.infer<typeof userSchema>;

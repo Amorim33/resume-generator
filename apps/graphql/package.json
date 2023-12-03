@@ -17,6 +17,7 @@
   },
   "dependencies": {
     "@graphql-tools/schema": "^10.0.0",
+    "@resume-generator/domain": "workspace:*",
     "@resume-generator/schema": "workspace:*",
     "graphql": "16.8.1",
     "graphql-relay": "0.10.0",
