@@ -1,0 +1,58 @@
+name: Continuous Integration
+
+on:
+  pull_request:
+    types: [opened, synchronize]
+  push:
+    branches:
+      - main
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: ${{ !startsWith(github.ref, 'refs/heads/main') }}
+
+jobs:
+  ci:
+    name: CI
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    services:
+      postgres:
+        image: postgres:16-alpine
+        env:
+          POSTGRES_USER: resume-generator
+          POSTGRES_PASSWORD: resume-generator
+          POSTGRES_DB: resume-generator
+        options: >- # cspell:disable-next-line --- not using camelCase
+          --health-cmd pg_isready
+          --health-interval 10s
+          --health-timeout 5s
+          --health-retries 5
+        ports:
+          - 54321:5432
+    steps:
+      - name: Check out code
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Setup environment
+        uses: ./.github/actions/setup-environment
+
+      - name: Check formatting
+        run: pnpm format:check
+
+      - name: Run spellcheck
+        uses: streetsidesoftware/cspell-action@v5
+
+      - name: Run lint
+        run: pnpm --filter "...[origin/main]" --parallel --stream --include-root-workspace lint
+
+      - name: Run type check
+        run: pnpm --filter "...[origin/main]" --parallel --stream --include-root-workspace type-check
+
+      - name: Build
+        run: pnpm --filter "...[origin/main]" --parallel --stream build
+
+      - name: Run tests
+        run: pnpm --filter "...[origin/main]" --parallel --stream test
