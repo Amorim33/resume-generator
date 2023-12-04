@@ -11,6 +11,8 @@
     "lint": "eslint --max-warnings=0 \"**/*.{ts*,js}\"",
     "lint:fix": "eslint --max-warnings=0 \"**/*.{ts*,js}\" --fix",
     "lint:locales": "sort-object --src ./src/locales",
+    "test": "vitest run",
+    "test:watch": "vitest",
     "ts": "tsx -r dotenv/config",
     "ts-dev": "tsx --no-warnings --watch -r dotenv/config",
     "type-check": "tsc --noEmit"

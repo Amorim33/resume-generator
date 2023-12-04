@@ -1,16 +1,17 @@
 import { sql } from 'slonik';
 import { randomUUID } from 'crypto';
 import { pool } from '../../../database';
-import { userSchema } from '../dto/user-schema';
+import { User, userSchema } from '../dto/user-schema';
 import { createUserRepository } from '../user-repository';
 import { createUserLoaders } from '../user-loader';
+import { userMock } from '../../../mock/user';
 
 const userRepository = createUserRepository(createUserLoaders());
-const testUser = {
-  email: 'test@test.com',
-  name: 'Test User',
-  contact: '1234567890',
-  about: 'About Test User',
+const testUser: Omit<User, 'id'> = {
+  email: userMock.email,
+  name: userMock.name,
+  contact: userMock.contact,
+  about: userMock.about,
 };
 
 const insertUserQuery = sql.type(userSchema)`
