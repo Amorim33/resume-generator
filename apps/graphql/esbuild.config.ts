@@ -1,7 +1,11 @@
 import { writeFileSync } from 'fs';
-import { resolve } from 'path';
+import { dirname, resolve } from 'path';
+import { fileURLToPath } from 'url';
 
 import { build } from 'esbuild';
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = dirname(__filename);
 
 const entryPoints = [resolve(__dirname, 'src/app.ts')];
 

@@ -17,13 +17,13 @@ export const createUserRepository = (loaders: UserLoaders) => ({
       return connection.one(sql.type(userSchema)`
         INSERT INTO users (email, name, contact, about) VALUES (${user.email}, ${user.name}, ${user.contact}, ${user.about})
         ON CONFLICT (email) DO UPDATE SET name = ${user.name}, contact = ${user.contact}, about = ${user.about}
-        RETURNING *;
+        RETURNING (id)
       `);
     });
 
     loaders.userByIdLoader.clear(updatedUser.id);
-    loaders.userByIdLoader.prime(updatedUser.id, updatedUser);
+    loaders.userByIdLoader.prime(updatedUser.id, { ...user, ...updatedUser });
 
-    return updatedUser;
+    return { ...user, ...updatedUser };
   },
 });
