@@ -1,15 +1,5 @@
 import { Logger, LoggerOptions, pino } from 'pino';
-
-export const createLogger = (
-  name: string,
-  options: LoggerOptions = {},
-): Logger =>
-  pino({
-    level: 'info',
-    transport: { target: 'pino-pretty' },
-    name,
-    ...options,
-  });
+import { env } from './config';
 
 /**
  * Which log level to use?
@@ -31,4 +21,12 @@ export const createLogger = (
  * - `fatal`: Use this for errors that are fatal to the application (e.g. "Unable
  *   to start server", "Unable to connect to database").
  */
-export const logger = createLogger('server');
+const createLogger = (name: string, options: LoggerOptions = {}): Logger =>
+  pino({
+    level: env.LOG_LEVEL,
+    transport: { target: 'pino-pretty' },
+    name,
+    ...options,
+  });
+
+export const logger = createLogger('graphql');

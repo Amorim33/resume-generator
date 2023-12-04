@@ -2,6 +2,7 @@
   "name": "@resume-generator/graphql",
   "version": "0.0.1",
   "sideEffects": false,
+  "type": "module",
   "scripts": {
     "build": "tsx esbuild.config.ts",
     "build:analyze": "ANALYZE=true pnpm build",

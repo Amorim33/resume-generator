@@ -1,12 +1,12 @@
 import { createServer } from 'node:http';
 
-import { createYoga } from 'graphql-yoga';
+import { createYoga, maskError } from 'graphql-yoga';
 
-import { logger } from './lib/logger';
-import { schema } from './schema';
-import { GraphQLContext } from './lib/context';
 import { createUserLoaders } from '@resume-generator/domain';
 import { env } from './lib/config';
+import { GraphQLContext } from './lib/context';
+import { logger } from './lib/logger';
+import { schema } from './schema';
 
 export const yoga = createYoga<GraphQLContext>({
   graphqlEndpoint: '/graphql',
@@ -35,12 +35,21 @@ export const yoga = createYoga<GraphQLContext>({
       loaders,
     };
   },
+  logging: logger,
+  maskedErrors: {
+    errorMessage: 'Internal server error.',
+    maskError: (error, message, isDev) => {
+      logger.error(error, message);
+      // TODO: Send error to Sentry when in production.
+      return maskError(error, message, isDev);
+    },
+  },
   parserAndValidationCache: true,
 });
 
 const server = createServer(yoga);
 
-if (env.NODE_ENV !== 'test') {
+if (env.NODE_ENV === 'development') {
   server.listen(4000, () => {
     logger.info('GraphQL server is running on http://localhost:4000/graphql');
   });
