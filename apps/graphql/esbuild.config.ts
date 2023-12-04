@@ -12,6 +12,7 @@ build({
   minify: true,
   sourcemap: true,
   mainFields: ['module', 'main'],
+  format: 'esm',
   entryPoints,
   entryNames: '[dir]/index',
   // cspell:disable-next-line - Esbuild property, can't change the name

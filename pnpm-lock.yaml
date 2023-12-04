@@ -68,6 +68,9 @@ importers:
       pino-pretty:
         specifier: ^10.2.3
         version: 10.2.3
+      zod:
+        specifier: ^3.22.4
+        version: 3.22.4
     devDependencies:
       '@graphql-codegen/cli':
         specifier: ^5.0.0

@@ -18,3 +18,7 @@ runs:
     - name: Install dependencies
       shell: bash
       run: pnpm install --frozen-lockfile
+
+    - name: Codegen
+      shell: bash
+      run: pnpm run update
