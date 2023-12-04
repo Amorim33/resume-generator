@@ -11,6 +11,8 @@
     "lint": "eslint --max-warnings=0 \"**/*.{ts*,js}\"",
     "lint:fix": "eslint --max-warnings=0 \"**/*.{ts*,js}\" --fix",
     "lint:locales": "sort-object --src ./src/locales",
+    "test": "vitest run",
+    "test:watch": "vitest",
     "ts": "tsx -r dotenv/config",
     "ts-dev": "tsx --no-warnings --watch -r dotenv/config",
     "type-check": "tsc --noEmit"
@@ -23,7 +25,8 @@
     "graphql-relay": "0.10.0",
     "graphql-yoga": "^5.0.0",
     "pino": "^8.16.2",
-    "pino-pretty": "^10.2.3"
+    "pino-pretty": "^10.2.3",
+    "zod": "^3.22.4"
   },
   "devDependencies": {
     "@graphql-codegen/cli": "^5.0.0",

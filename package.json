@@ -17,7 +17,8 @@
     "lint:fix": "eslint --report-unused-disable-directives --max-warnings=0 \"**/*.{ts*,js,cjs}\" --fix",
     "prepare": "lefthook install",
     "test-all": "pnpm run -r --stream --parallel test",
-    "type-check": "pnpm run -r --stream --parallel type-check"
+    "type-check": "pnpm run -r --stream --parallel type-check",
+    "update": "pnpm run --parallel generate && pnpm run --parallel relay"
   },
   "devDependencies": {
     "@commitlint/cli": "18.0.0",

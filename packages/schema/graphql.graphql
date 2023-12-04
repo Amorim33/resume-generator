@@ -29,6 +29,16 @@ type Query {
 }
 
 """
+The mutation root of GraphQL schema.
+"""
+type Mutation {
+  """
+  Creates a new user, or updates an existing one.
+  """
+  UserUpsert(input: UserUpsertInput!): UserUpsertPayload
+}
+
+"""
 An object with an ID
 """
 interface Node {
@@ -66,4 +76,65 @@ type User implements Node {
   The self description of the user
   """
   about: String!
+}
+
+type UserUpsertPayload {
+  """
+  Possible mutation errors.
+  """
+  errors: [Error!]
+
+  """
+  User that is currently in the context.
+  """
+  me: User
+}
+
+input UserInput {
+  """
+  The name of the user
+  """
+  name: String!
+
+  """
+  The email of the user
+  """
+  email: String!
+
+  """
+  The preferred contact of the user
+  """
+  contact: String!
+
+  """
+  The self description of the user
+  """
+  about: String!
+}
+
+input UserUpsertInput {
+  """
+  The user data.
+  """
+  user: UserInput!
+}
+
+"""
+Represents a detailed error. The information is used to display a user-friendly error message.
+"""
+type Error {
+  """
+  Error code. e.g. "USER_NOT_FOUND"
+  """
+  code: String!
+
+  """
+  Error title. e.g. "User not found"
+  """
+  title: String!
+
+  """
+  Error details. e.g. "User with id 123 not found"
+  """
+  details: String
 }

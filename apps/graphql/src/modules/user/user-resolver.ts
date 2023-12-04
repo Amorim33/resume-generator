@@ -10,6 +10,7 @@ export const userResolverSchema = z
       .uuid()
       .transform((uuid) => toGlobalId('User', uuid)),
     name: z.string(),
+    email: z.string().email(),
     contact: z.string(),
     about: z.string(),
   })

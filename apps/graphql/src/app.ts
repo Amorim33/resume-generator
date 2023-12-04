@@ -6,6 +6,7 @@ import { logger } from './lib/logger';
 import { schema } from './schema';
 import { GraphQLContext } from './lib/context';
 import { createUserLoaders } from '@resume-generator/domain';
+import { env } from './lib/config';
 
 export const yoga = createYoga<GraphQLContext>({
   graphqlEndpoint: '/graphql',
@@ -39,6 +40,8 @@ export const yoga = createYoga<GraphQLContext>({
 
 const server = createServer(yoga);
 
-server.listen(4000, () => {
-  logger.info('GraphQL server is running on http://localhost:4000/graphql');
-});
+if (env.NODE_ENV !== 'test') {
+  server.listen(4000, () => {
+    logger.info('GraphQL server is running on http://localhost:4000/graphql');
+  });
+}
