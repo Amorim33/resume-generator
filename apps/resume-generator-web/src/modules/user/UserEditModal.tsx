@@ -12,7 +12,7 @@ import Skeleton from 'react-loading-skeleton';
 
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useRoutePreloadedQuery } from '@resume-generator/relay';
-import { useForm } from 'react-hook-form';
+import { SubmitHandler, useForm } from 'react-hook-form';
 import { graphql } from 'react-relay';
 import { z } from 'zod';
 import { UserEditModalQuery } from './__generated__/UserEditModalQuery.graphql';
@@ -44,6 +44,8 @@ const userEditSchema = z.object({
     .email({ message: 'Email must be valid.' }),
 });
 
+type UserEditInput = z.infer<typeof userEditSchema>;
+
 export const UserEditModal: FC = () => {
   const { me } = useRoutePreloadedQuery<UserEditModalQuery>(graphql`
     query UserEditModalQuery {
@@ -70,6 +72,9 @@ export const UserEditModal: FC = () => {
     },
   });
 
+  // eslint-disable-next-line no-console --- TODO: commit mutation
+  const onSubmit: SubmitHandler<UserEditInput> = (data) => console.log(data);
+
   return (
     <Dialog.Root defaultOpen open>
       <Dialog.Trigger>
@@ -83,8 +88,7 @@ export const UserEditModal: FC = () => {
           justifyContent: 'center',
         }}
       >
-        {/* eslint-disable-next-line no-console --- TODO: add submit function */}
-        <form onSubmit={handleSubmit((data) => console.log(data))}>
+        <form onSubmit={handleSubmit(onSubmit)}>
           <Flex direction="row" gap="9" justify="center">
             <Flex direction="column" gap="3" width="100%">
               <Dialog.Title>Edit profile</Dialog.Title>
@@ -114,6 +118,7 @@ export const UserEditModal: FC = () => {
                   <TextField.Input
                     {...register('email')}
                     placeholder="Enter your email"
+                    disabled={!!me?.email}
                   />
                   {errors.email?.message && (
                     <Text size="2" color="red">
