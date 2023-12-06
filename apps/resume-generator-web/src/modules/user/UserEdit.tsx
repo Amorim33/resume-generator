@@ -68,22 +68,24 @@ const UserEdit: FC<UserEditProps> = ({ queryRef }) => {
     queryRef,
   );
 
-  const [commitMutation, isInFlight] = useMutation<UserEditMutation>(graphql`
-    mutation UserEditMutation($input: UserUpsertInput!) {
-      UserUpsert(input: $input) {
-        me {
-          id
-          name
-          email
-          contact
-          about
-        }
-        errors {
-          details
+  const [userUpsert, isPendingUserUpsert] = useMutation<UserEditMutation>(
+    graphql`
+      mutation UserEditMutation($input: UserUpsertInput!) {
+        UserUpsert(input: $input) {
+          me {
+            id
+            name
+            email
+            contact
+            about
+          }
+          errors {
+            details
+          }
         }
       }
-    }
-  `);
+    `,
+  );
 
   const {
     register,
@@ -99,8 +101,8 @@ const UserEdit: FC<UserEditProps> = ({ queryRef }) => {
     },
   });
 
-  const onSubmit: SubmitHandler<UserEditInput> = (values) => {
-    commitMutation({
+  const onUserUpsert: SubmitHandler<UserEditInput> = (values) => {
+    userUpsert({
       variables: {
         input: {
           user: values,
@@ -140,7 +142,7 @@ const UserEdit: FC<UserEditProps> = ({ queryRef }) => {
 
   return (
     <Flex p="5">
-      <form onSubmit={handleSubmit(onSubmit)}>
+      <form onSubmit={handleSubmit(onUserUpsert)}>
         <Flex direction="row" gap="9" justify="center">
           <Flex direction="column" gap="3" width="100%">
             <Heading>Edit profile</Heading>
@@ -222,6 +224,13 @@ const UserEdit: FC<UserEditProps> = ({ queryRef }) => {
             justify="between"
             style={{ maxWidth: '250px' }}
           >
+            <img
+              src="/question-mark.webp"
+              alt="Question Mark Cartoon"
+              style={{ maxWidth: '350px', borderRadius: '10px' }}
+              loading="lazy"
+              decoding="async"
+            />
             <Text>
               <Text as="span" size="2" weight="bold">
                 Pro tip:
@@ -241,13 +250,9 @@ const UserEdit: FC<UserEditProps> = ({ queryRef }) => {
               </Text>
               , etc.
             </Text>
-            <img
-              src="/question-mark.png"
-              alt="Question Mark"
-              style={{ maxWidth: '350px', borderRadius: '10px' }}
-            />
-            <Button type="submit" disabled={isInFlight}>
-              {isInFlight ? (
+
+            <Button type="submit" disabled={isPendingUserUpsert}>
+              {isPendingUserUpsert ? (
                 <Text size="2">Saving...</Text>
               ) : (
                 <Text size="2">Save</Text>
