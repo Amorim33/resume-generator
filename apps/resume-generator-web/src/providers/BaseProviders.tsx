@@ -13,7 +13,7 @@ export const BaseProviders: FC<BaseProvidersProps> = ({
   relayEnvironment,
 }) => {
   return (
-    <Theme accentColor="amber" grayColor="sand" radius="large" scaling="95%">
+    <Theme accentColor="red" grayColor="sand" radius="large" scaling="95%">
       <Suspense>
         <RelayEnvironmentProvider environment={relayEnvironment}>
           {children}

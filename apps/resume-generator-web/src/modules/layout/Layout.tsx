@@ -1,12 +1,29 @@
 import { Code, Flex, Link, Text } from '@radix-ui/themes';
+import { useRoutePreloadedQuery } from '@resume-generator/relay';
 import { FC } from 'react';
-import { Outlet, useRouteError } from 'react-router-dom';
+import { graphql } from 'react-relay';
+import { Navigate, Outlet, useLocation, useRouteError } from 'react-router-dom';
+import { LayoutQuery } from './__generated__/LayoutQuery.graphql';
 
 export const Component: FC = () => {
+  const location = useLocation();
+  const query = useRoutePreloadedQuery<LayoutQuery>(graphql`
+    query LayoutQuery {
+      me {
+        id
+      }
+      ...UserEdit_query
+    }
+  `);
+
+  if (!query.me?.id && location.pathname !== '/user') {
+    return <Navigate to="/user" />;
+  }
+
   return (
-    <div>
-      <Outlet />
-    </div>
+    <Flex justify="center">
+      <Outlet context={{ queryRef: query }} />
+    </Flex>
   );
 };
 Component.displayName = 'Layout';
