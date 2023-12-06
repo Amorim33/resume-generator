@@ -7,6 +7,7 @@ import { env } from './lib/config';
 import { GraphQLContext } from './lib/context';
 import { logger } from './lib/logger';
 import { schema } from './schema';
+import { fromGlobalId } from 'graphql-relay';
 
 export const yoga = createYoga<GraphQLContext>({
   graphqlEndpoint: '/graphql',
@@ -16,7 +17,10 @@ export const yoga = createYoga<GraphQLContext>({
       return context;
     }
 
-    const userId = context.request.headers.get('authorization')?.split(' ')[1];
+    const userGlobalId = context.request.headers
+      .get('authorization')
+      ?.split(' ')[1];
+    const userId = userGlobalId ? fromGlobalId(userGlobalId).id : null;
     const loaders = createUserLoaders();
 
     if (userId) {
@@ -37,7 +41,7 @@ export const yoga = createYoga<GraphQLContext>({
   },
   logging: logger,
   maskedErrors: {
-    errorMessage: 'Internal server error.',
+    errorMessage: 'Unexpected error. Please try again.',
     maskError: (error, message, isDev) => {
       logger.error(error, message);
       // TODO: Send error to Sentry when in production.
