@@ -1,14 +1,16 @@
 import {
-  Button,
   Flex,
   Heading,
+  IconButton,
   Text,
   TextArea,
   TextField,
 } from '@radix-ui/themes';
+import { animated, useSpring } from '@react-spring/web';
 import { FC } from 'react';
 
 import { zodResolver } from '@hookform/resolvers/zod';
+import { PaperPlaneIcon } from '@radix-ui/react-icons';
 import { SubmitHandler, useForm } from 'react-hook-form';
 import { Toaster, toast } from 'react-hot-toast';
 import { graphql, useFragment, useMutation } from 'react-relay';
@@ -101,6 +103,11 @@ const UserEdit: FC<UserEditProps> = ({ queryRef }) => {
     },
   });
 
+  const [springs, api] = useSpring(() => ({
+    from: { opacity: 0, x: 2500 },
+    to: { opacity: 1, x: 0 },
+  }));
+
   const onUserUpsert: SubmitHandler<UserEditInput> = (values) => {
     userUpsert({
       variables: {
@@ -131,6 +138,25 @@ const UserEdit: FC<UserEditProps> = ({ queryRef }) => {
           return;
         }
 
+        api.start({
+          from: {
+            x: 0,
+          },
+          to: {
+            x: 2500,
+          },
+          onRest: () => {
+            api.start({
+              from: {
+                x: 2500,
+              },
+              to: {
+                x: 0,
+              },
+            });
+          },
+        });
+
         saveSession(data.UserUpsert.me.id);
         toast.success('Profile updated successfully.');
       },
@@ -141,128 +167,140 @@ const UserEdit: FC<UserEditProps> = ({ queryRef }) => {
   };
 
   return (
-    <Flex p="5">
-      <form onSubmit={handleSubmit(onUserUpsert)}>
-        <Flex direction="row" gap="9" justify="center">
-          <Flex direction="column" gap="3" width="100%">
-            <Heading>Edit profile</Heading>
-            <Text size="2" mb="4">
-              Update your profile to improve your resume! 😁
-            </Text>
+    <form onSubmit={handleSubmit(onUserUpsert)} style={{ minWidth: '100%' }}>
+      <Flex direction="column" gap="4" p="8">
+        <Flex direction="column" gap="3" width="100%">
+          <Heading size="9" color="amber">
+            Edit profile
+          </Heading>
+          <Text size="6" mb="4">
+            Update your profile to improve your resume! 😁
+          </Text>
 
-            <Flex direction="row" gap="5" justify="between">
-              <div style={{ width: '100%' }}>
-                <Text as="label" htmlFor="name" size="2" mb="1" weight="bold">
-                  Name
-                </Text>
-                <TextField.Input
-                  {...register('name')}
-                  placeholder="Enter your full name"
-                />
-                {errors.name?.message && (
-                  <Text size="2" color="red">
-                    {errors.name.message}
-                  </Text>
-                )}
-              </div>
-              <div style={{ width: '100%' }}>
-                <Text as="label" htmlFor="name" size="2" mb="1" weight="bold">
-                  Email
-                </Text>
-                <TextField.Input
-                  {...register('email')}
-                  placeholder="Enter your email"
-                  disabled={!!me?.email}
-                />
-                {errors.email?.message && (
-                  <Text size="2" color="red">
-                    {errors.email.message}
-                  </Text>
-                )}
-              </div>
-              <div style={{ width: '100%' }}>
-                <Text
-                  as="label"
-                  htmlFor="contact"
-                  size="2"
-                  mb="1"
-                  weight="bold"
-                >
-                  Contact
-                </Text>
-                <TextField.Input
-                  {...register('contact')}
-                  placeholder="Enter your preferred contact (e.g. email, phone number)"
-                />
-                {errors.contact?.message && (
-                  <Text size="2" color="red">
-                    {errors.contact.message}
-                  </Text>
-                )}
-              </div>
-            </Flex>
-
-            <div>
-              <Text as="label" htmlFor="about" size="2" mb="1" weight="bold">
-                About
+          <Flex direction="row" gap="5" justify="between">
+            <div style={{ width: '100%' }}>
+              <Text
+                as="label"
+                htmlFor="name"
+                size="4"
+                mb="1"
+                weight="bold"
+                color="amber"
+              >
+                Name
               </Text>
-              <TextArea
-                {...register('about')}
-                size="3"
-                placeholder="Tell us about yourself! (e.g. your story, hobbies, interests, etc.)"
-                style={{ height: '400px' }}
+              <TextField.Input
+                {...register('name')}
+                placeholder="Enter your full name"
               />
-              {errors.about?.message && (
-                <Text size="2" color="red">
-                  {errors.about.message}
+              {errors.name?.message && (
+                <Text size="4" color="red">
+                  {errors.name.message}
+                </Text>
+              )}
+            </div>
+            <div style={{ width: '100%' }}>
+              <Text
+                as="label"
+                htmlFor="name"
+                size="4"
+                mb="1"
+                weight="bold"
+                color="amber"
+              >
+                Email
+              </Text>
+              <TextField.Input
+                {...register('email')}
+                placeholder="Enter your email"
+                disabled={!!me?.email}
+              />
+              {errors.email?.message && (
+                <Text size="4" color="red">
+                  {errors.email.message}
+                </Text>
+              )}
+            </div>
+            <div style={{ width: '100%' }}>
+              <Text
+                as="label"
+                htmlFor="contact"
+                size="4"
+                mb="1"
+                weight="bold"
+                color="amber"
+              >
+                Contact
+              </Text>
+              <TextField.Input
+                {...register('contact')}
+                placeholder="Enter your preferred contact (e.g. email, phone number)"
+              />
+              {errors.contact?.message && (
+                <Text size="4" color="red">
+                  {errors.contact.message}
                 </Text>
               )}
             </div>
           </Flex>
-          <Flex
-            direction="column"
-            justify="between"
-            style={{ maxWidth: '250px' }}
-          >
-            <img
-              src="/question-mark.webp"
-              alt="Question Mark Cartoon"
-              style={{ maxWidth: '350px', borderRadius: '10px' }}
-              loading="lazy"
-              decoding="async"
-            />
-            <Text>
-              <Text as="span" size="2" weight="bold">
-                Pro tip:
-              </Text>{' '}
-              Be as descriptive as possible about yourself, you can reuse your
-              profile from{' '}
-              <Text as="span" size="2" weight="bold">
-                Contra
-              </Text>
-              ,{' '}
-              <Text as="span" size="2" weight="bold">
-                Linkedin
-              </Text>
-              ,{' '}
-              <Text as="span" size="2" weight="bold">
-                Fiver
-              </Text>
-              , etc.
-            </Text>
 
-            <Button type="submit" disabled={isPendingUserUpsert}>
-              {isPendingUserUpsert ? (
-                <Text size="2">Saving...</Text>
-              ) : (
-                <Text size="2">Save</Text>
-              )}
-            </Button>
-          </Flex>
+          <div>
+            <Text
+              as="label"
+              htmlFor="about"
+              size="4"
+              mb="1"
+              weight="bold"
+              color="amber"
+            >
+              About
+            </Text>
+            <TextArea
+              {...register('about')}
+              size="3"
+              placeholder="Tell us about yourself! (e.g. your story, hobbies, interests, etc.)"
+              style={{ height: '400px' }}
+            />
+            {errors.about?.message && (
+              <Text size="4" color="red">
+                {errors.about.message}
+              </Text>
+            )}
+          </div>
         </Flex>
-        <Toaster position="top-center" />
-      </form>
-    </Flex>
+        <Text size="4" color="amber">
+          <Text as="span" weight="bold">
+            Pro tip:
+          </Text>{' '}
+          Be as descriptive as possible about yourself, you can reuse your
+          profile from{' '}
+          <Text as="span" weight="bold">
+            Contra
+          </Text>
+          ,{' '}
+          <Text as="span" weight="bold">
+            Linkedin
+          </Text>
+          ,{' '}
+          <Text as="span" weight="bold">
+            Fiver
+          </Text>
+          , etc.
+        </Text>
+        <animated.div style={springs}>
+          <IconButton
+            type="submit"
+            disabled={isPendingUserUpsert}
+            size="4"
+            aria-label="Save profile"
+          >
+            <PaperPlaneIcon />
+          </IconButton>
+        </animated.div>
+      </Flex>
+
+      <Toaster position="top-center" />
+    </form>
   );
 };
 
@@ -270,7 +308,7 @@ export const Component: FC = () => {
   const { queryRef } = useOutletContext<OutletContext>();
 
   return (
-    <Flex direction="column" align="center" gap="5">
+    <Flex width="100%" height="100%">
       <UserEdit queryRef={queryRef} />
     </Flex>
   );
