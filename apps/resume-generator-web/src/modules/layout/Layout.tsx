@@ -1,4 +1,13 @@
-import { Code, Flex, Link, Text } from '@radix-ui/themes';
+import { Pencil1Icon } from '@radix-ui/react-icons';
+import {
+  Box,
+  Code,
+  Flex,
+  Heading,
+  IconButton,
+  Link,
+  Text,
+} from '@radix-ui/themes';
 import { useRoutePreloadedQuery } from '@resume-generator/relay';
 import { FC } from 'react';
 import { graphql } from 'react-relay';
@@ -21,9 +30,28 @@ export const Component: FC = () => {
   }
 
   return (
-    <Flex justify="center">
+    <div>
+      <Box
+        width="100%"
+        style={{
+          boxShadow: '5px 5px 10px lightgray',
+        }}
+        p="4"
+      >
+        <Flex direction="row" justify="between" align="center">
+          <Link href="/">
+            <Heading>Resume Generator 🤖</Heading>
+          </Link>
+
+          <IconButton asChild aria-label="Edit profile" size="4">
+            <Link href="/user">
+              <Pencil1Icon />
+            </Link>
+          </IconButton>
+        </Flex>
+      </Box>
       <Outlet context={{ queryRef: query }} />
-    </Flex>
+    </div>
   );
 };
 Component.displayName = 'Layout';
