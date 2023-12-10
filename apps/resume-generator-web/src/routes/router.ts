@@ -24,7 +24,7 @@ export const routes: RouteObject[] = [
     children: [
       {
         path: '/',
-        lazy: lazyRoute(() => import('../modules/user/UserGenerateResume')),
+        lazy: lazyRoute(() => import('../modules/resume/ResumeGenerate')),
       },
       {
         path: '/user',

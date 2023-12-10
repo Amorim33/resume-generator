@@ -1,11 +1,4 @@
-import {
-  Flex,
-  Heading,
-  IconButton,
-  Text,
-  TextArea,
-  TextField,
-} from '@radix-ui/themes';
+import { Flex, Heading, IconButton, Text } from '@radix-ui/themes';
 import { animated, useSpring } from '@react-spring/web';
 import { FC } from 'react';
 
@@ -16,6 +9,8 @@ import { Toaster, toast } from 'react-hot-toast';
 import { graphql, useFragment, useMutation } from 'react-relay';
 import { useOutletContext } from 'react-router-dom';
 import { z } from 'zod';
+import { ControlledInput } from '../../components/ControlledInput';
+import { ControlledTextArea } from '../../components/ControlledTextArea';
 import { OutletContext } from '../../lib/context';
 import { saveSession } from '../../lib/session';
 import { UserEditMutation } from './__generated__/UserEditMutation.graphql';
@@ -178,95 +173,38 @@ const UserEdit: FC<UserEditProps> = ({ queryRef }) => {
           </Text>
 
           <Flex direction="row" gap="5" justify="between">
-            <div style={{ width: '100%' }}>
-              <Text
-                as="label"
-                htmlFor="name"
-                size="4"
-                mb="1"
-                weight="bold"
-                color="amber"
-              >
-                Name
-              </Text>
-              <TextField.Input
-                {...register('name')}
-                placeholder="Enter your full name"
-              />
-              {errors.name?.message && (
-                <Text size="4" color="red">
-                  {errors.name.message}
-                </Text>
-              )}
-            </div>
-            <div style={{ width: '100%' }}>
-              <Text
-                as="label"
-                htmlFor="name"
-                size="4"
-                mb="1"
-                weight="bold"
-                color="amber"
-              >
-                Email
-              </Text>
-              <TextField.Input
-                {...register('email')}
-                placeholder="Enter your email"
-                disabled={!!me?.email}
-              />
-              {errors.email?.message && (
-                <Text size="4" color="red">
-                  {errors.email.message}
-                </Text>
-              )}
-            </div>
-            <div style={{ width: '100%' }}>
-              <Text
-                as="label"
-                htmlFor="contact"
-                size="4"
-                mb="1"
-                weight="bold"
-                color="amber"
-              >
-                Contact
-              </Text>
-              <TextField.Input
-                {...register('contact')}
-                placeholder="Enter your preferred contact (e.g. email, phone number)"
-              />
-              {errors.contact?.message && (
-                <Text size="4" color="red">
-                  {errors.contact.message}
-                </Text>
-              )}
-            </div>
+            <ControlledInput
+              name="name"
+              label="Name"
+              register={register}
+              errors={errors}
+              placeholder="Enter your name"
+            />
+
+            <ControlledInput
+              name="email"
+              label="Email"
+              register={register}
+              errors={errors}
+              placeholder="Enter your email"
+              disabled={!!me?.email}
+            />
+            <ControlledInput
+              name="contact"
+              label="Contact"
+              register={register}
+              errors={errors}
+              placeholder="Enter your preferred contact (it will be used on your resume)"
+            />
           </Flex>
 
-          <div>
-            <Text
-              as="label"
-              htmlFor="about"
-              size="4"
-              mb="1"
-              weight="bold"
-              color="amber"
-            >
-              About
-            </Text>
-            <TextArea
-              {...register('about')}
-              size="3"
-              placeholder="Tell us about yourself! (e.g. your story, hobbies, interests, etc.)"
-              style={{ height: '400px' }}
-            />
-            {errors.about?.message && (
-              <Text size="4" color="red">
-                {errors.about.message}
-              </Text>
-            )}
-          </div>
+          <ControlledTextArea
+            name="about"
+            label="About"
+            register={register}
+            errors={errors}
+            rows={20}
+          />
         </Flex>
         <Text size="4" color="amber">
           <Text as="span" weight="bold">
