@@ -13,19 +13,31 @@ type Query {
   ): Node
 
   """
-  Fetches objects given their IDs
-  """
-  nodes(
-    """
-    The IDs of objects
-    """
-    ids: [ID!]!
-  ): [Node]!
-
-  """
   User that is currently logged in.
   """
   me: User
+
+  resumes(
+    """
+    Returns the resumes in the list that come after the specified cursor.
+    """
+    after: String
+
+    """
+    Returns the first n resumes from the list.
+    """
+    first: Int
+
+    """
+    Returns the resumes in the list that come before the specified cursor.
+    """
+    before: String
+
+    """
+    Returns the last n resumes from the list.
+    """
+    last: Int
+  ): ResumeConnection
 }
 
 """
@@ -76,6 +88,56 @@ type User implements Node {
   The self description of the user
   """
   about: String!
+}
+
+"""
+The resume object type
+"""
+type Resume implements Node {
+  """
+  The id of the resume
+  """
+  id: ID!
+
+  """
+  The generated resume in HTML format
+  """
+  html: String!
+}
+
+"""
+The resume edge in a connection.
+"""
+type ResumeEdge {
+  """
+  The resume at the end of the edge
+  """
+  node: Resume!
+
+  """
+  A cursor for use in pagination
+  """
+  cursor: String!
+}
+
+"""
+A connection to a list of resumes.
+"""
+type ResumeConnection {
+  """
+  A count of the total number of resumes in this connection, ignoring pagination.
+  """
+  count: Int!
+
+  """
+  Information to aid in pagination.
+  """
+  pageInfo: PageInfoExtended!
+
+  """
+  A list of edges.
+  """
+  edges: [ResumeEdge]!
 }
 
 type UserUpsertPayload {
@@ -137,4 +199,29 @@ type Error {
   Error details. e.g. "User with id 123 not found"
   """
   details: String
+}
+
+"""
+Information about pagination in a connection.
+"""
+type PageInfoExtended {
+  """
+  When paginating forwards, are there more items?
+  """
+  hasNextPage: Boolean!
+
+  """
+  When paginating backwards, are there more items?
+  """
+  hasPreviousPage: Boolean!
+
+  """
+  When paginating backwards, the cursor to continue.
+  """
+  startCursor: String
+
+  """
+  When paginating forwards, the cursor to continue.
+  """
+  endCursor: String
 }

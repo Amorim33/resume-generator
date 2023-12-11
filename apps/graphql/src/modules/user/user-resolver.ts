@@ -1,6 +1,6 @@
 import { toGlobalId } from 'graphql-relay';
 import { z } from 'zod';
-import { QueryNodeArgs, User } from '../../__generated__/resolvers-types';
+import { User } from '../../__generated__/resolvers-types';
 import { GraphQLContext } from '../../lib/context';
 
 export const userResolverSchema = z
@@ -18,6 +18,6 @@ export const userResolverSchema = z
 
 export const userResolve = (
   _: unknown,
-  __: QueryNodeArgs,
+  __: unknown,
   context: GraphQLContext,
 ): User | null => userResolverSchema.parse(context.user);

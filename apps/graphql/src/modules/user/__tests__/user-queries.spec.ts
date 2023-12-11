@@ -27,7 +27,9 @@ it('queries me', async () => {
   const result = await executor({
     document: meQuery,
     context: {
-      loaders: createUserLoaders(),
+      loaders: {
+        user: createUserLoaders(),
+      },
       user,
     },
   });

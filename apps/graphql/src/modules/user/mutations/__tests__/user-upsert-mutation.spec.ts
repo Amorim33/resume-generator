@@ -34,7 +34,9 @@ it('upsert the user', async () => {
   const result = await executor({
     document: meQuery,
     context: {
-      loaders: createUserLoaders(),
+      loaders: {
+        user: createUserLoaders(),
+      },
     },
     variables: {
       input: {
