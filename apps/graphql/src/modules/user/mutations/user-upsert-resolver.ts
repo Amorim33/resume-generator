@@ -18,7 +18,7 @@ export const userUpsertResolve = async (
     throw new Error('Loaders not found');
   }
 
-  const userRepository = createUserRepository(loaders);
+  const userRepository = createUserRepository(loaders.user);
   const user = await userRepository.upsert(input.user);
 
   return {

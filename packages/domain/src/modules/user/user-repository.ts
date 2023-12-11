@@ -11,7 +11,7 @@ import { UserLoaders } from './user-loader';
  *   const user = await userRepository.findById('uuid');
  */
 export const createUserRepository = (loaders: UserLoaders) => ({
-  findById: (id: string) => loaders.userByIdLoader.load(id),
+  findById: (id: string) => loaders.loaderById.load(id),
   upsert: async (user: Omit<User, 'id'>) => {
     const updatedUser = await pool.connect(async (connection) => {
       return connection.one(sql.type(userSchema)`
@@ -21,8 +21,8 @@ export const createUserRepository = (loaders: UserLoaders) => ({
       `);
     });
 
-    loaders.userByIdLoader.clear(updatedUser.id);
-    loaders.userByIdLoader.prime(updatedUser.id, { ...user, ...updatedUser });
+    loaders.loaderById.clear(updatedUser.id);
+    loaders.loaderById.prime(updatedUser.id, { ...user, ...updatedUser });
 
     return { ...user, ...updatedUser };
   },

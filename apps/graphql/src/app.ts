@@ -2,7 +2,10 @@ import { createServer } from 'node:http';
 
 import { createYoga, maskError } from 'graphql-yoga';
 
-import { createUserLoaders } from '@resume-generator/domain';
+import {
+  createResumeLoaders,
+  createUserLoaders,
+} from '@resume-generator/domain';
 import { env } from './lib/config';
 import { GraphQLContext } from './lib/context';
 import { logger } from './lib/logger';
@@ -21,10 +24,13 @@ export const yoga = createYoga<GraphQLContext>({
       .get('authorization')
       ?.split(' ')[1];
     const userId = userGlobalId ? fromGlobalId(userGlobalId).id : null;
-    const loaders = createUserLoaders();
+    const loaders = {
+      user: createUserLoaders(),
+      resume: createResumeLoaders(),
+    };
 
     if (userId) {
-      const user = await loaders.userByIdLoader.load(userId);
+      const user = await loaders.user.loaderById.load(userId);
 
       return {
         ...context,

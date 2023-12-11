@@ -16,7 +16,7 @@ const UserByIdLoader = createNodeByIdLoaderClass({
 });
 
 export type UserLoaders = {
-  userByIdLoader: InstanceType<typeof UserByIdLoader>;
+  loaderById: InstanceType<typeof UserByIdLoader>;
 };
 
 /**
@@ -26,10 +26,12 @@ export type UserLoaders = {
  *   context: (context) => {
  *     return {
  *       ...context,
- *       loaders: createUserLoaders(),
+ *       loaders: {
+ *         user: createUserLoaders(),
+ *       },
  *     };
  *   };
  */
 export const createUserLoaders = (): UserLoaders => ({
-  userByIdLoader: new UserByIdLoader(pool),
+  loaderById: new UserByIdLoader(pool),
 });
