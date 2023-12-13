@@ -12,15 +12,14 @@ TODO
 
 ## Stack
 
-## Core
+### Core
 
-- GPT-3.5
-- Puppeteer
+- GPT-4
+- react-to-pdf
 
 ### Server
 
 - GraphQL Yoga
-- Zod
 
 ### Database
 
@@ -35,4 +34,22 @@ TODO
 - React Router
 - Relay
 - Radix UI
-- Styled Components
+- React Hook Form
+
+### Utilities
+
+- Zod
+- Pino
+
+### Dev
+
+- Vitest (testing)
+- Esbuild (bundle)
+- Eslint (lint)
+- Prettier (formatting)
+- Typescript
+
+### CI/CD
+
+- Github Actions
+- Lefthook (pre-commit/pre-push)
