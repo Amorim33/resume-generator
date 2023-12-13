@@ -48,6 +48,11 @@ type Mutation {
   Creates a new user, or updates an existing one.
   """
   UserUpsert(input: UserUpsertInput!): UserUpsertPayload
+
+  """
+  Generates a resume for the user.
+  """
+  ResumeGenerate(input: ResumeGenerateInput!): ResumeGeneratePayload
 }
 
 """
@@ -179,6 +184,55 @@ input UserUpsertInput {
   The user data.
   """
   user: UserInput!
+}
+
+type ResumeGeneratePayload {
+  """
+  Possible mutation errors.
+  """
+  errors: [Error!]
+
+  """
+  Generated resume.
+  """
+  resume: Resume
+}
+
+input ResumeGenerateInput {
+  """
+  The user professional experience.
+  """
+  experience: String!
+
+  """
+  The user education background.
+  """
+  education: String!
+
+  """
+  The user professional goals
+  """
+  goals: String
+
+  """
+  The user skills
+  """
+  skills: String
+
+  """
+  The user languages
+  """
+  languages: String
+
+  """
+  The user projects
+  """
+  projects: String
+
+  """
+  The user certifications
+  """
+  certifications: String
 }
 
 """

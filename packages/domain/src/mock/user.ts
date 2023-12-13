@@ -1,6 +1,6 @@
-import { createMockQueryResult } from 'slonik';
 import { randomUUID } from 'crypto';
-import { User } from '../modules/user/dto/user-schema';
+import { createMockQueryResult, sql } from 'slonik';
+import { User, userSchema } from '../modules/user/dto/user-schema';
 
 export const userMock: User = {
   id: randomUUID(),
@@ -11,3 +11,14 @@ export const userMock: User = {
 };
 
 export const userQuery = createMockQueryResult([userMock]);
+
+export const insertUserQuery = sql.type(userSchema)`
+    INSERT INTO users (email, name, contact, about)
+    VALUES (
+      ${userMock.email},
+      ${userMock.name},
+      ${userMock.contact},
+      ${userMock.about}
+    )
+    RETURNING *;
+`;

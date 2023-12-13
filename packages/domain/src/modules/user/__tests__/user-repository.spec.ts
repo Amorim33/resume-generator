@@ -1,10 +1,10 @@
-import { sql } from 'slonik';
 import { randomUUID } from 'crypto';
+import { sql } from 'slonik';
 import { pool } from '../../../database';
-import { User, userSchema } from '../dto/user-schema';
-import { createUserRepository } from '../user-repository';
+import { insertUserQuery, userMock } from '../../../mock/user';
+import { User } from '../dto/user-schema';
 import { createUserLoaders } from '../user-loader';
-import { userMock } from '../../../mock/user';
+import { createUserRepository } from '../user-repository';
 
 const userRepository = createUserRepository(createUserLoaders());
 const testUser: Omit<User, 'id'> = {
@@ -13,17 +13,6 @@ const testUser: Omit<User, 'id'> = {
   contact: userMock.contact,
   about: userMock.about,
 };
-
-const insertUserQuery = sql.type(userSchema)`
-    INSERT INTO users (email, name, contact, about)
-    VALUES (
-      ${testUser.email},
-      ${testUser.name},
-      ${testUser.contact},
-      ${testUser.about}
-    )
-    RETURNING *;
-`;
 
 beforeEach(async () => {
   await pool.connect(async (connection) => {

@@ -9,7 +9,7 @@ const executor = buildHTTPExecutor({
   fetch: yoga.fetch,
 });
 
-const meQuery = parse(/* GraphQL */ `
+const userUpsertMutation = parse(/* GraphQL */ `
   mutation UserUpsertMutation($input: UserUpsertInput!) {
     UserUpsert(input: $input) {
       me {
@@ -32,7 +32,7 @@ it('upsert the user', async () => {
   const user = userMock;
 
   const result = await executor({
-    document: meQuery,
+    document: userUpsertMutation,
     context: {
       loaders: {
         user: createUserLoaders(),

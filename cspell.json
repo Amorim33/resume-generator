@@ -27,6 +27,7 @@
     "metafile",
     "microbundle",
     "nuxt",
+    "openai",
     "packagejson",
     "pids",
     "pino",

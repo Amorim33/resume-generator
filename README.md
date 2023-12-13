@@ -46,7 +46,7 @@ TODO
 - Vitest (testing)
 - Esbuild (bundle)
 - Eslint (lint)
-- Prettier (formating)
+- Prettier (formatting)
 - Typescript
 
 ### CI/CD
