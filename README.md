@@ -12,7 +12,7 @@ TODO
 
 ## Stack
 
-## Core
+### Core
 
 - GPT-4
 - react-to-pdf
