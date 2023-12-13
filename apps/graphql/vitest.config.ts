@@ -8,6 +8,7 @@ const __dirname = dirname(__filename);
 export default defineConfig({
   test: {
     globals: true,
+    setupFiles: resolve(__dirname, './test/setup.ts'),
     globalSetup: resolve(__dirname, './test/setup-env.ts'),
     coverage: {
       all: true,

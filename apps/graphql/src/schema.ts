@@ -8,6 +8,7 @@ import { userResolve } from './modules/user/user-resolver';
 import { userUpsertResolve } from './modules/user/mutations/user-upsert-resolver';
 import { resumeConnectionResolve } from './modules/resume/resume-resolver';
 import { nodeResolve, nodeResolverType } from './modules/node/node-resolver';
+import { resumeGenerateResolve } from './modules/resume/mutations/resume-generate-resolver';
 
 const resolvers: Resolvers = {
   Query: {
@@ -17,6 +18,7 @@ const resolvers: Resolvers = {
   },
   Mutation: {
     UserUpsert: { resolve: userUpsertResolve },
+    ResumeGenerate: { resolve: resumeGenerateResolve },
   },
   Node: {
     __resolveType: nodeResolverType,
