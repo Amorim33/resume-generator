@@ -1,4 +1,6 @@
 {
   "extends": "../tsconfig/tsconfig.web.json",
+  // https://stackoverflow.com/questions/60029058/project-must-list-all-files-or-use-an-include-pattern
+  "include": ["src/**/*", "package.json"],
   "exclude": ["node_modules"]
 }
