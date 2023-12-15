@@ -34,8 +34,8 @@ export const resumeConnectionResolve = async (
   _: unknown,
   args: QueryResumesArgs,
   context: GraphQLContext,
-): Promise<ResumeConnection | null> => {
-  return context.user
+): Promise<ResumeConnection | null> =>
+  context.user
     ? resumeConnectionResolverSchema.parse(
         await context.loaders.resume.loaderByUserId.loadConnection(
           context.user,
@@ -43,4 +43,3 @@ export const resumeConnectionResolve = async (
         ),
       )
     : null;
-};

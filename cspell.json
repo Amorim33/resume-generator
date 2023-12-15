@@ -32,6 +32,7 @@
     "pids",
     "pino",
     "preloadable",
+    "refetchable",
     "slonik",
     "stylelintcache",
     "vuepress",

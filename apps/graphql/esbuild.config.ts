@@ -29,7 +29,7 @@ build({
 
   writeFileSync('esbuild-meta.json', JSON.stringify(result.metafile));
   // eslint-disable-next-line no-console
-  console.log(
+  console.info(
     '\nMetafile written to esbuild-meta.json\nOpen https://esbuild.github.io/analyze/ to analyze the bundle',
   );
 });
