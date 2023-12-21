@@ -1,4 +1,4 @@
-import { Pencil1Icon } from '@radix-ui/react-icons';
+import { MagicWandIcon, Pencil1Icon } from '@radix-ui/react-icons';
 import {
   Box,
   Code,
@@ -43,11 +43,18 @@ export const Component: FC = () => {
             <Heading>Resume Generator 🤖</Heading>
           </Link>
 
-          <IconButton asChild aria-label="Edit profile" size="4">
-            <Link href="/user">
-              <Pencil1Icon />
-            </Link>
-          </IconButton>
+          <Flex direction="row" gap="2" align="center">
+            <IconButton asChild aria-label="Generate Resume" size="4">
+              <Link href="/resume">
+                <MagicWandIcon />
+              </Link>
+            </IconButton>
+            <IconButton asChild aria-label="Edit profile" size="4">
+              <Link href="/user">
+                <Pencil1Icon />
+              </Link>
+            </IconButton>
+          </Flex>
         </Flex>
       </Box>
       <Outlet context={{ queryRef: query }} />

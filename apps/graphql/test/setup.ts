@@ -16,7 +16,7 @@ vi.mock('openai', async () => {
                 index: 0,
                 message: {
                   role: 'assistant',
-                  content: '<p>Test resume</p>',
+                  content: '```html<p>Test resume</p>```',
                 },
                 finish_reason: 'stop',
               },
