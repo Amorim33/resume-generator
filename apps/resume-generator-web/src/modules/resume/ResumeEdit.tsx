@@ -34,8 +34,9 @@ const ResumeEdit: FC = () => {
         language="html"
         onChange={(evn) => setHtml(evn.target.value)}
         padding={15}
+        data-color-mode="light"
         style={{
-          backgroundColor: '#f5f5f5',
+          width: '100%',
           fontFamily:
             'ui-monospace,SFMono-Regular,SF Mono,Consolas,Liberation Mono,Menlo,monospace',
         }}
@@ -48,7 +49,6 @@ const ResumeEdit: FC = () => {
         >
           <DownloadIcon />
         </IconButton>
-
         <div ref={targetRef} style={{ width: '100%' }}>
           <div style={{}} dangerouslySetInnerHTML={{ __html: html }} />
         </div>

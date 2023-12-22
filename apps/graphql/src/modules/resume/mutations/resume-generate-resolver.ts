@@ -118,10 +118,11 @@ export const resumeGenerateResolve = async (
     - Add a section for the software engineer's languages if they have any, use all the information provided by the software engineer and improve the grammar, create a table with the languages and the level of proficiency, align left
     - Add a section for the software engineer's professional goals if they have any, use all the information provided by the software engineer and improve the grammar
     - If the content provided is not in English, translate it to English
-    - Use the most as possible of the information provided by the software engineer
+    - Use the most of the information provided by the software engineer
 
-    You have to return a HTML document with the resume in it (JUST RETURN THE GENERATED HTML DOCUMENT, THE STRING MUST BE VALID HTML).
-    You have to add CSS to the HTML document to make it look modern.
+    You have to return a HTML document with the resume in it.
+    Generate the CSS inside style props, e.g. <div style={{ color: 'red' }}></div>
+    You have to add styles to the HTML document to make it look modern.
     Create an innovative design for the resume.
     The must be ready to be used, with no need for further editing.
     JUST RETURN THE HTML, NOTHING ELSE.

@@ -27,7 +27,6 @@ const Resumes: FC<ResumesProps> = ({ queryRef }) => {
           edges {
             node {
               id
-              html
             }
           }
         }

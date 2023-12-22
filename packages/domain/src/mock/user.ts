@@ -8,6 +8,7 @@ export const userMock: User = {
   name: 'Test User',
   contact: '+5511123456789',
   about: 'I am a test user doing a great job!',
+  created_at: new Date('2023-12-25').getTime(),
 };
 
 export const userQuery = createMockQueryResult([userMock]);
