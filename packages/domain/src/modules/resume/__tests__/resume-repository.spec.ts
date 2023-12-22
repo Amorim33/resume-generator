@@ -28,7 +28,7 @@ it('creates a resume', async () => {
   const insertedUser = await pool.connect((connection) => {
     return connection.one(insertUserQuery);
   });
-  const testResume: Omit<Resume, 'id'> = {
+  const testResume: Omit<Resume, 'id' | 'created_at'> = {
     user_id: insertedUser.id,
     html: resumeMock.html,
   };

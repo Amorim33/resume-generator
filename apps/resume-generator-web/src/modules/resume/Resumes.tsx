@@ -35,11 +35,19 @@ const Resumes: FC<ResumesProps> = ({ queryRef }) => {
     queryRef,
   );
 
+  if (!data?.resumes?.edges) {
+    return null;
+  }
+
+  const { edges, count } = data.resumes;
+
   return (
     <Flex direction="column" gap="5" width="100%">
-      {data?.resumes?.edges?.map((edge) => (
+      {edges.map((edge, index) => (
         <Button key={edge?.node.id} asChild size="4">
-          <Link href={`/resume/${edge?.node.id}`}>Open Resume</Link>
+          <Link href={`/resume/${edge?.node.id}`}>
+            Open Resume {count - index}
+          </Link>
         </Button>
       ))}
       <Button

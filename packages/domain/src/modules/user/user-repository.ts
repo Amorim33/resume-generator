@@ -12,7 +12,7 @@ import { UserLoaders } from './user-loader';
  */
 export const createUserRepository = (loaders: UserLoaders) => ({
   findById: (id: string) => loaders.loaderById.load(id),
-  upsert: async (user: Omit<User, 'id'>) => {
+  upsert: async (user: Omit<User, 'id' | 'created_at'>) => {
     const updatedUser = await pool.connect(async (connection) => {
       return connection.one(sql.type(userSchema)`
         INSERT INTO users (email, name, contact, about) VALUES (${user.email}, ${user.name}, ${user.contact}, ${user.about})

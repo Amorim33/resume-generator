@@ -7,7 +7,7 @@ import { createUserLoaders } from '../user-loader';
 import { createUserRepository } from '../user-repository';
 
 const userRepository = createUserRepository(createUserLoaders());
-const testUser: Omit<User, 'id'> = {
+const testUser: Omit<User, 'id' | 'created_at'> = {
   email: userMock.email,
   name: userMock.name,
   contact: userMock.contact,
@@ -58,8 +58,11 @@ it('updates an existing user', async () => {
     name: 'Updated User',
   });
 
-  expect(updatedUser).toMatchObject({
-    ...insertedUser,
+  expect(updatedUser).toEqual({
+    id: insertedUser.id,
     name: 'Updated User',
+    about: insertedUser.about,
+    contact: insertedUser.contact,
+    email: insertedUser.email,
   });
 });
