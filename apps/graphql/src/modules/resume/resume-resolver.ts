@@ -38,7 +38,7 @@ export const resumeConnectionResolve = async (
   context.user
     ? resumeConnectionResolverSchema.parse(
         await context.loaders.resume.loaderByUserId.loadConnection(
-          context.user,
+          context.user.id,
           args,
         ),
       )

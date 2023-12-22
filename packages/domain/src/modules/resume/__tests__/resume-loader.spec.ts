@@ -1,14 +1,13 @@
 import { sql } from 'slonik';
-import { User, userSchema } from '../../../modules/user/dto/user-schema';
 import { pool } from '../../../database';
+import { resumeMock } from '../../../mock/resume';
 import { userMock } from '../../../mock/user';
+import { userSchema } from '../../../modules/user/dto/user-schema';
 import { Resume, resumeSchema } from '../dto/resume-schema';
 import { createResumeLoaders } from '../resume-loader';
-import { resumeMock } from '../../../mock/resume';
 
 const loaders = createResumeLoaders();
 
-let user: User;
 let resume: Resume;
 
 beforeEach(async () => {
@@ -18,7 +17,7 @@ beforeEach(async () => {
     `);
   });
 
-  user = await pool.connect((connection) => {
+  const user = await pool.connect((connection) => {
     return connection.one(sql.type(userSchema)`
         INSERT INTO users (email, name, contact, about)
         VALUES (
@@ -56,9 +55,12 @@ it('loads a resume by id', async () => {
 });
 
 it('loads resumes by user id', async () => {
-  const connection = await loaders.loaderByUserId.loadConnection(user, {
-    first: 1,
-  });
+  const connection = await loaders.loaderByUserId.loadConnection(
+    resume.user_id,
+    {
+      first: 1,
+    },
+  );
 
   expect(connection).toEqual({
     count: 0n,
@@ -74,11 +76,16 @@ it('loads resumes by user id', async () => {
         id: resume.id,
         html: resume.html,
         user_id: resume.user_id,
+        created_at: resume.created_at,
         node: {
           ...resume,
-          s1: [resume.id],
+          s1: [
+            expect.stringMatching(/^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}\.\d+$/),
+          ],
         },
-        s1: [resume.id],
+        s1: [
+          expect.stringMatching(/^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}\.\d+$/),
+        ],
       },
     ],
   });

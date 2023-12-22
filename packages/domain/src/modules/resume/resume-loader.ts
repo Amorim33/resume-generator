@@ -5,7 +5,6 @@ import {
 } from 'slonik-dataloaders';
 import { pool } from '../../database';
 import { resumeSchema } from './dto/resume-schema';
-import { User } from '../user/dto/user-schema';
 
 const ResumeByIdLoader = createNodeByIdLoaderClass({
   column: {
@@ -31,7 +30,7 @@ const ResumeConnectionLoader = createConnectionLoaderClass({
 class ResumeByUserIdLoader extends ResumeConnectionLoader {
   /** Method to load a connection of resumes by user id. */
   public async loadConnection(
-    user: User,
+    userId: string,
     pagination: {
       after?: string | null;
       first?: number | null;
@@ -41,8 +40,8 @@ class ResumeByUserIdLoader extends ResumeConnectionLoader {
   ) {
     const { after, first, before, last } = pagination;
     return this.load({
-      where: ({ user_id }) => sql.fragment`${user_id} = ${user.id}`,
-      orderBy: ({ id }) => [[id, 'ASC']],
+      where: ({ user_id }) => sql.fragment`${user_id} = ${userId}`,
+      orderBy: ({ created_at }) => [[created_at, 'DESC']],
       cursor: after || before,
       limit: first,
       offset: last,

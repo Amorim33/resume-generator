@@ -50,7 +50,7 @@ const ResumeEdit: FC = () => {
         </IconButton>
 
         <div ref={targetRef} style={{ width: '100%' }}>
-          <div dangerouslySetInnerHTML={{ __html: html }} />
+          <div style={{}} dangerouslySetInnerHTML={{ __html: html }} />
         </div>
       </Flex>
       <Toaster position="top-center" />
